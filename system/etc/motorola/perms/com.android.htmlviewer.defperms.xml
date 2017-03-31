@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <package name="com.android.htmlviewer">
+        <permission name="android.permission.READ_EXTERNAL_STORAGE" />
+    </package>
+</permissions>

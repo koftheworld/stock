@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="GBK"?>
+<deam version="1.0" xmlns="http://www.motorola.com/bug2go">
+    <!--
+     To create fake audio logs:
+     touch /data/adspd/audio_log_0_12345.pcm
+     touch /data/adspd/audio_log_1_12345.pcm
+     touch /data/adspd/audio_log_2_12345.pcm
+     touch /data/adspd/audio_log_12345.pcm
+
+     To create a fake DSP panic:
+     touch /data/adspd/dsp_panic_dump_12345.bin
+     echo "fake panic\nSubtype: aov_dsp_panic:" > /data/system/dropbox-add/SUBSYS_SILENT_PANIC:2:9876-12345
+
+     To create a fake daemon panic:
+     echo "ADSPD version: fake-version\nSubtype: aov_adspd_panic: fake panic" > /data/system/dropbox-add/SUBSYS_SILENT_PANIC:2:9876-12345
+     -->
+    <tag type="dropbox" name="SUBSYS_SILENT_PANIC">
+        <scenario name="AOV Silent Panic">
+            <filters>
+                <entry>
+                    <regex>^Subtype: (aov_dsp_panic|aov_adspd_panic):.*$</regex>
+                </entry>
+            </filters>
+            <actions>
+                <attach>
+                    <entry/>
+                    <!-- /data/adspd/dsp_panic_dump_*.bin -->
+                    <!-- /data/adspd/audio_log_*.pcm -->
+                    <exec program="/system/bin/sh">
+                        <args>
+                            <arg>-c</arg>
+                            <arg>
+                                cd /data/adspd/
+                                if [ $? != 0 ]; then
+                                exit 1
+                                fi
+                                for file in $(ls *.bin *.pcm); do
+                                cat $file >> $B2G_REPORT_DIR/$file
+                                mv $file $file.b2g
+                                done
+                            </arg>
+                        </args>
+                    </exec>
+                    <!-- Get system logs from logcat, in case aplogd isn't running or the files aren't accessible. -->
+                    <exec program="/system/bin/sh">
+                        <args>
+                            <arg>-c</arg>
+                            <arg>
+                                for buffer in main system radio events crash; do
+                                /system/bin/logcat -d -b $buffer -v threadtime > $B2G_REPORT_DIR/logcat.$buffer.txt
+                                done
+                                /system/bin/dmesg > $B2G_REPORT_DIR/dmesg.txt
+                            </arg>
+                        </args>
+                    </exec>
+                    <!-- Get system logs from aplogd if available. -->
+                    <exec program="/system/bin/aplogcat">
+                        <output>aplogcat.txt</output>
+                        <args>
+                            <arg>--dump</arg>
+                            <arg>--output</arg>
+                            <arg>./aplogcat-</arg>
+                            <arg>--temp</arg>
+                            <arg>./</arg>
+                            <arg>--bytes</arg>
+                            <arg>100M</arg>
+                        </args>
+                    </exec>
+                    <!-- Grab logs that help debug aplogd itself. -->
+                    <exec program="/system/bin/sh">
+                        <args>
+                            <arg>-c</arg>
+                            <arg>
+                                cat /data/aplogd/aplogd-log.bak.txt > aplogd-log.txt
+                                cat /data/aplogd/aplogd-log.txt >> aplogd-log.txt
+                            </arg>
+                        </args>
+                    </exec>
+                    <exec program="/system/bin/sh">
+                        <args>
+                            <arg>-c</arg>
+                            <arg>
+                                out=$B2G_REPORT_DIR/hardware_revisions.txt
+                                path=/data/hardware_revisions
+                                echo "FORMAT\n&lt;type>:&lt;vendor>:&lt;revision>:&lt;date/lot>:&lt;firmware revision>:&lt;extra info>\n" >> $out
+                                for file in $(ls $path); do
+                                echo "$path/$file" >> $out
+                                cat $path/$file >> $out
+                                echo >> $out
+                                done
+                            </arg>
+                        </args>
+                    </exec>
+                </attach>
+            </actions>
+        </scenario>
+    </tag>
+</deam>

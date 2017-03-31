@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<audio_platform_info>
+
+<acdb_ids>
+	<!-- OUT devices -->
+	<device name="SND_DEVICE_OUT_VOICE_HANDSET" acdb_id="7"/>
+	<device name="SND_DEVICE_OUT_VOICE_HANDSET_TMUS" acdb_id="7"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_ANC_HANDSET" acdb_id="7"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_HANDSET" acdb_id="7"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_HANDSET_TMUS" acdb_id="7"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_HEADPHONES" acdb_id="10"/>
+	<device name="SND_DEVICE_OUT_SPEAKER" acdb_id="14"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_AND_HDMI" acdb_id="14"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_REVERSE" acdb_id="14"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_SAFE" acdb_id="14"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_HAC_HANDSET" acdb_id="53"/>
+	<device name="SND_DEVICE_OUT_VOICE_SPEAKER" acdb_id="66"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_SPEAKER" acdb_id="66"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_LINE" acdb_id="77"/>
+	<!-- IN devices -->
+	<device name="SND_DEVICE_IN_VOICE_DMIC" acdb_id="6"/>
+	<device name="SND_DEVICE_IN_VOICE_DMIC_TMUS" acdb_id="6"/>
+	<device name="SND_DEVICE_IN_VOICE_REC_MIC" acdb_id="61"/>
+	<device name="SND_DEVICE_IN_VOICE_REC_MIC_NS" acdb_id="107"/>
+	<device name="SND_DEVICE_IN_VOICE_REC_DMIC_STEREO" acdb_id="34"/>
+	<device name="SND_DEVICE_IN_VOICE_REC_DMIC_FLUENCE" acdb_id="41"/>
+</acdb_ids>
+
+<backend_names>
+	<device name="SND_DEVICE_OUT_SPEAKER" backend="speaker"/>
+	<device name="SND_DEVICE_OUT_VOICE_SPEAKER" backend="speaker"/>
+	<device name="SND_DEVICE_OUT_VOLTE_NB_SPEAKER" backend="speaker"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_SAFE" backend="speaker"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_REVERSE" backend="speaker"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES" backend="speaker-and-headphones"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_AND_LINE" backend="speaker-and-headphones"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_SAFE_AND_HEADPHONES" backend="speaker-and-headphones"/>
+	<device name="SND_DEVICE_OUT_SPEAKER_SAFE_AND_LINE" backend="speaker-and-headphones"/>
+</backend_names>
+
+<pcm_ids>
+	<usecase name="USECASE_VOICE_CALL" type="in" id="20"/>
+	<usecase name="USECASE_VOICE_CALL" type="out" id="20"/>
+	<usecase name="USECASE_VOICE2_CALL" type="in" id="25"/>
+	<usecase name="USECASE_VOICE2_CALL" type="out" id="25"/>
+	<usecase name="USECASE_VOLTE_CALL" type="in" id="21"/>
+	<usecase name="USECASE_VOLTE_CALL" type="out" id="21"/>
+	<usecase name="USECASE_QCHAT_CALL" type="out" id="33"/>
+	<usecase name="USECASE_QCHAT_CALL" type="out" id="33"/>
+	<usecase name="USECASE_VOWLAN_CALL" type="out" id="-1"/>
+	<usecase name="USECASE_VOWLAN_CALL" type="out" id="-1"/>
+</pcm_ids>
+
+</audio_platform_info>
+

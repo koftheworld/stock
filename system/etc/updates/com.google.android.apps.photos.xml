@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone='yes' ?>
+    <updates>
+        <package old="com.google.android.apps.plus">
+            <shortcut
+                newpackage="com.google.android.apps.photos"
+                oldclass="com.google.android.apps.plus.phone.ConversationListActivity"
+                newclass="com.google.android.apps.photos.home.HomeActivity" />
+        </package>
+    </updates>

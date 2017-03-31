@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <feature name="com.motorola.software.device.quark" />
+    <feature name="com.motorola.software.product.quark_verizon" />
+    <feature name="com.motorola.hardware.tier." />
+    <feature name="com.motorola.hardware.wave.0" />
+</permissions>

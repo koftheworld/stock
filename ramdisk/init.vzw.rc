@@ -1,0 +1,49 @@
+on boot
+#Permission for Hiddenmenu files
+    chown mot_tcmd system /pds/public/hiddenmenu/data/program
+    chown mot_tcmd system /pds/public/hiddenmenu/data/akey
+    chown mot_tcmd system /pds/public/hiddenmenu/data/fts
+
+    chmod 0644 /pds/public/hiddenmenu/data/program
+    chmod 0644 /pds/public/hiddenmenu/data/akey
+    chmod 0644 /pds/public/hiddenmenu/data/fts
+
+    chown radio radio /pds/public/hiddenmenu/data/factoryreset_time
+    chmod 0644 /pds/public/hiddenmenu/data/factoryreset_time
+
+on fs
+# Load FIPS kernel module
+    exec /system/bin/fips_loader /system/lib/modules
+
+on post-fs
+#Permission for telephony
+    mkdir /persist/public/telephony 0770 radio radio
+
+on property:sys.usb.config=cdrom
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file ""
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/bDeviceClass 0
+    write /sys/class/android_usb/android0/bDeviceSubClass 0
+    write /sys/class/android_usb/android0/bDeviceProtocol 0
+    write /sys/class/android_usb/android0/idVendor 22b8
+    write /sys/class/android_usb/android0/idProduct 2E85
+    write /sys/class/android_usb/android0/f_mass_storage/cdrom 1
+    write /sys/class/android_usb/android0/functions mass_storage
+    write /sys/class/android_usb/android0/enable 1
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/system/etc/cdrom"
+    setprop sys.usb.state ${sys.usb.config}
+
+on property:sys.usb.config=cdrom,adb
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file ""
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/bDeviceClass 0
+    write /sys/class/android_usb/android0/bDeviceSubClass 0
+    write /sys/class/android_usb/android0/bDeviceProtocol 0
+    write /sys/class/android_usb/android0/idVendor 22b8
+    write /sys/class/android_usb/android0/idProduct 2E77
+    write /sys/class/android_usb/android0/f_mass_storage/cdrom 1
+    write /sys/class/android_usb/android0/functions mass_storage,adb
+    write /sys/class/android_usb/android0/enable 1
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/system/etc/cdrom"
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
